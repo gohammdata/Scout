@@ -9,6 +9,7 @@ type Lexer struct {
   ch byte
 }
 
+
 func New(input string) *Lexer {
   l := &Lexer{input: input}
   l.readChar()
@@ -17,6 +18,8 @@ func New(input string) *Lexer {
 
 func (l *Lexer) NextToken() token.Token {
   var tok token.Token
+
+  l.skipWhitespace() //Shnauzer DGAF about whitespace and calls the function to prove it
 
   switch l.ch {
   case '=':
@@ -41,13 +44,39 @@ func (l *Lexer) NextToken() token.Token {
   default:
     if isLetter(l.ch) {
       tok.Literal = l.readIdentifier()
+      tok.Type = token.LookupIdent(tok.Literal)  //Now goes to token package to lookup
       return tok
-    } else {
+    } else if isDigit(l.ch) {
+      tok.Type = token.INT
+      tok.Literal = l.readNumber()
+      return tok
+      } else {
       tok = newToken(token.ILLEGAL, l.ch)
     }
   }
   l.readChar()
   return tok
+}
+
+//Schnauzer will now be able to read the Digits
+func(l *Lexer) readNumber() string {
+  position := l.position
+  for isDigit(l.ch) {
+    l.readChar()
+  }
+  return l.input[position:l.position]
+}
+
+//Schnauzer returns whether the passed byte is between 0 and 9 in isDigit
+func isDigit(ch byte) bool {
+  return '0' <= ch && ch <= '9'
+}
+
+//Shnauzer could care less about whitespace and uses Go RegEx to prove it!
+func (l*Lexer) skipWhitespace() {
+  for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+    l.readChar()
+  }
 }
 
 /*
