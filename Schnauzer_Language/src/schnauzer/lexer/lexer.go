@@ -38,10 +38,42 @@ func (l *Lexer) NextToken() token.Token {
   case 0:
     tok.Literal = ""
     tok.Type = token.EOF
+  default:
+    if isLetter(l.ch) {
+      tok.Literal = l.readIdentifier()
+      return tok
+    } else {
+      tok = newToken(token.ILLEGAL, l.ch)
+    }
   }
   l.readChar()
   return tok
 }
+
+/*
+Read Identifier of token ch bytes. For loops ch bytes in the string to see
+if they are a letter and returns the array of every position
+(every ch byte) but now as a string to be marked as an input string from the
+Lexer data structure
+*/
+
+func (l *Lexer) readIdentifier() string {
+  position := l.position
+  for isLetter(l.ch) {
+    l.readChar()
+  }
+  return l.input[position:l.position]
+}
+
+/*
+Checks if the byte is a letter. Handles case sensitivity. Handles underscore.
+Underscor so say var_foo would read.
+*/
+
+func isLetter(ch byte) bool {
+  return 'a' <= ch && ch <== 'z' || 'A' <== ch && ch <= 'Z' || ch =='_'
+}
+
 func newToken(tokenType token.TokenType, ch byte) token.Token {
   return token.Token{Type: tokenType, Literal: string(ch)}
 }
