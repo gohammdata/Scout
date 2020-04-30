@@ -37,8 +37,8 @@ type Token struct {
 }
 //Keywords
 var keywords = map[string]TokenType{
-  "fn": FUNCTION;
-  "let": LET;
+  "fn": FUNCTION,
+  "let": LET,
 }
 
 /*Checks Keywords table to see if the ident is a keyword.
