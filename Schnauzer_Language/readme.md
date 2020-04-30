@@ -14,3 +14,4 @@
     <li>a hash data structure</li>
 </ul>
 <b>2 branches now</b>
+<b>Next Step is adding to the Lexer, run a 3rd test then build the parser</b>
