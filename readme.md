@@ -1,6 +1,8 @@
 Current branch working in dev for parser feature.
 <h1>Scout - The Tree Walking Interpreter for Schnauzer</h1>
 <p>This Interpretor, Scout, implements all of the features of the programming language Schnauzer. Scout tokenizes and parses Schnauzer source code in a REPL, building up an internal representation of the code called by an abstract syntax tree and then evaluate the tree.</p>
+
+<p>Contemplating switching the Interpreter to C/C++ rather than Go to interpret Schnuzer.</p>
 <b>Scout's Major Parts</b>
 <ul>
     <li>The Lexer</li>
